@@ -1,0 +1,62 @@
+{% set name = "qctool" %}
+{% set version = "2.2.0" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://github.com/gavinband/qctool/archive/v{{ version }}.tar.gz
+  sha256: 2afe85eefc1ed73ae0d4128c8b232b379fa7ccf34e42809ebebb620f7d166a03
+
+build:
+  skip: True # [win]
+  # TODO what to use here?
+  number: 0
+
+requirements:
+  build:
+    - {{ compiler('c') }}
+    - {{ compiler('cxx') }}
+  host:
+    - boost {{ boost }}
+    - boost-cpp {{ boost }}
+    - sqlite
+    - zlib
+    - zstd
+  run:
+    - boost-cpp {{ boost }}
+
+test:
+  source_files:
+    - release
+  imports:
+    - qctool
+  requires:
+    - python
+    - robotframework
+  commands:
+    - ./test/functional/run_tests.sh
+
+about:
+  home: https://www.well.ox.ac.uk/~gav/qctool/
+  summary: 'a program for manipulation and quality control of gwas datasets and other genome-wide data'
+  description: |
+    QCTOOL is a command-line utility program for manipulation and quality control of gwas datasets and other genome-wide data. QCTOOL can be used
+    - To compute per-variant and per-sample QC metrics.
+    - To filter out samples or variants.
+    - To merge datasets in various ways.
+    - To convert dataset between file formats. (In particular QCTOOL can read and write BGEN files, including full support for the BGEN v1.2 format that has been used for the UK Biobank imputed data full release).
+    - To manipulate datasets in various ways - e.g. by updating data fields or aligning alleles to a reference sequence based on information in a strand file.
+    - To annotate variants with information from BED files, sequence from FASTA files, or with genetic map positions.
+    - To compute LD metrics between variants.
+    - To compare genotypes for individuals typed or imputed or phased in different datasets.
+    - To compute between-sample relatedness and principal components.
+    - To compute 'genetic risk predictor' scores.
+  license: BSL-1.0
+  license_family: BSL
+  license_file: LICENSE_1_0.txt
+
+extra:
+  recipe-maintainers:
+    - giuliocentorame
