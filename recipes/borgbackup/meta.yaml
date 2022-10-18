@@ -15,6 +15,12 @@ build:
   number: 0
 
 requirements:
+  build:
+    - python >=3.8
+    - setuptools
+    - pkgconfig
+    - cython
+    - setuptools_scm >=1.7
   host:
     - python >=3.8
     - pkgconfig
@@ -22,6 +28,8 @@ requirements:
     - pip
   run:
     - python >=3.8
+    - openssl >=1.0.0
+    - libacl
 
 test:
   imports:
