@@ -36,8 +36,10 @@ test:
     - borgbackup
   commands:
     - pip check
+    - flake8 src scripts conftest.py
   requires:
     - pip
+    - flake8
 
 about:
   home: https://borgbackup.readthedocs.io/
